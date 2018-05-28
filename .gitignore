@@ -1,0 +1,9 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+*.dll
+*.pdb
+/K2Field.K2NE.SPContentBroker/obj/Debug
+/Release
+*.suo
