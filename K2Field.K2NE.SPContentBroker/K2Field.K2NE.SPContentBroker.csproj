@@ -101,13 +101,13 @@
     <Compile Include="Helpers\MapHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceObjectBase.cs" />
-    <Compile Include="ServiceObjects\SPDocument.cs" />
-    <Compile Include="ServiceObjects\SPDocumentSet.cs" />
-    <Compile Include="ServiceObjects\SPFolder.cs" />
-    <Compile Include="ServiceObjects\SPListLibrary.cs" />
-    <Compile Include="ServiceObjects\SPLists.cs" />
+    <Compile Include="ServiceObjects\SPDocumentMethods.cs" />
+    <Compile Include="ServiceObjects\SPDocumentSetMethods.cs" />
+    <Compile Include="ServiceObjects\SPFolderMethods.cs" />
+    <Compile Include="ServiceObjects\SPListLibraryMethods.cs" />
+    <Compile Include="ServiceObjects\SPListsMethods.cs" />
     <Compile Include="ServiceObjects\SPDefinition.cs" />
-    <Compile Include="ServiceObjects\SPPermission.cs" />
+    <Compile Include="ServiceObjects\SPPermissionMethods.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
