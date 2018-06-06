@@ -122,6 +122,7 @@
 xcopy /y /r "$(SolutionDir)\Installer\Install.ps1" "$(SolutionDir)\Release\"
 xcopy /y /r "$(SolutionDir)\Solution Files\Release Notes.docx" "$(SolutionDir)\Release\"
 xcopy /q /y "$(TargetPath)" "$(SolutionDir)\Release\"
+xcopy /q /y "$(SolutionDir)\Solution Files\SharePointAssemblies\*.dll" "$(SolutionDir)\Release\"
 </PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
