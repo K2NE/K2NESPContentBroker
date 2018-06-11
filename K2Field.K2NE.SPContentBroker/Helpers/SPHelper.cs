@@ -22,7 +22,7 @@ namespace K2Field.K2NE.SPContentBroker.Helpers
 
             foreach (Field destinationField in destinationItem.ParentList.Fields)
             {
-                if (string.Compare(destinationField.InternalName, "Attachments") != 0)
+                if (string.Compare(destinationField.InternalName, Constants.SharePointProperties.Attachments) != 0 && string.Compare(destinationField.InternalName, Constants.SharePointProperties.ContentType) != 0)
                 {
                         Field sourceField = sourceItem.ParentList.Fields.Where(f => string.Compare(f.InternalName, destinationField.InternalName) == 0
                         && f.FieldTypeKind == destinationField.FieldTypeKind && !f.ReadOnlyField && !f.Hidden).FirstOrDefault();
