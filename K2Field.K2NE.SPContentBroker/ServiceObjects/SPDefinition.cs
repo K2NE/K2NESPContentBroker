@@ -427,6 +427,12 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
                     
                     so.Properties.Add(fileNameProp);
                     break;
+                case FieldType.Invalid:
+                    if (string.Compare(fd.TypeAsString, Constants.SharePointProperties.TaxanomyFieldType) == 0 || string.Compare(fd.TypeAsString, Constants.SharePointProperties.TaxanomyFieldTypeMulti) == 0)
+                    {
+                        so.Properties.Add(CreateFieldProperty(Constants.InternalProperties.Suffix_Value, SoType.Text, fd, true));
+                    }
+                    break;
             }
         }
 
