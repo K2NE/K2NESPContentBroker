@@ -8,7 +8,7 @@ using SourceCode.SmartObjects.Services.ServiceSDK.Types;
 using System.Text.RegularExpressions;
 using Microsoft.SharePoint.Client;
 using System.Globalization;
-using Microsoft.SharePoint.Client.Taxonomy;
+using Microsoft.SharePoint.Taxonomy;
 
 namespace K2Field.K2NE.SPContentBroker.Helpers
 {
