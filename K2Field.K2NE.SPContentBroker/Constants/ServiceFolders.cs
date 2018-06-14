@@ -7,6 +7,6 @@ namespace K2Field.K2NE.SPContentBroker.Constants
 {
     public static class ServiceFolders
     {
-        public const string ListItems = "ListItems";
+        public const string ListItems = "Lists";
     }
 }

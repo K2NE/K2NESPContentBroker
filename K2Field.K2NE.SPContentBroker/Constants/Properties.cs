@@ -36,5 +36,9 @@ namespace K2Field.K2NE.SPContentBroker.Constants
         public const string FileLeafRef = "FileLeafRef";
         public const string FileRef = "FileRef";
         public const string DocSetContentType = "0x0120D520";
+        public const string Attachments = "Attachments";
+        public const string ContentType = "ContentType";
+        public const string TaxanomyFieldType = "TaxonomyFieldType";
+        public const string TaxanomyFieldTypeMulti = "TaxonomyFieldTypeMulti";
     }
 }
