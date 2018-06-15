@@ -25,7 +25,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharePointAssemblies", "Sha
 		Solution Files\SharePointAssemblies\Microsoft.SharePoint.Client.dll = Solution Files\SharePointAssemblies\Microsoft.SharePoint.Client.dll
 		Solution Files\SharePointAssemblies\Microsoft.SharePoint.Client.DocumentManagement.dll = Solution Files\SharePointAssemblies\Microsoft.SharePoint.Client.DocumentManagement.dll
 		Solution Files\SharePointAssemblies\Microsoft.SharePoint.Client.Runtime.dll = Solution Files\SharePointAssemblies\Microsoft.SharePoint.Client.Runtime.dll
-		Solution Files\SharePointAssemblies\Microsoft.SharePoint.Taxonomy.dll = Solution Files\SharePointAssemblies\Microsoft.SharePoint.Taxonomy.dll
+		Solution Files\SharePointAssemblies\Microsoft.SharePoint.Client.Taxonomy.dll = Solution Files\SharePointAssemblies\Microsoft.SharePoint.Client.Taxonomy.dll
 	EndProjectSection
 EndProject
 Global

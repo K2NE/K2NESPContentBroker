@@ -10,6 +10,7 @@ using System.Text;
 using System.Data;
 using System.Globalization;
 using System.Xml;
+using Microsoft.SharePoint.Client.Taxonomy;
 
 namespace K2Field.K2NE.SPContentBroker.ServiceObjects
 {
@@ -28,6 +29,8 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
                 ListCollection lists = spWeb.Lists;
                 context.Load(lists);
                 context.ExecuteQuery();
+                //Making this dummy call to load the Micorsoft.Sharepoint.Client.Taxanomy assembly (https://blogs.msdn.microsoft.com/boodablog/2014/07/04/taxonomy-fields-return-as-dictionaries-using-the-client-objcet-model-in-sharepoint-2013/) 
+                TaxonomyItem dummy = new TaxonomyItem(context, null);
                 foreach (List list in lists)
                 {
 

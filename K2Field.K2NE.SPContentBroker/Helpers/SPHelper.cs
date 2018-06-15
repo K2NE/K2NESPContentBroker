@@ -8,7 +8,7 @@ using SourceCode.SmartObjects.Services.ServiceSDK.Types;
 using System.Text.RegularExpressions;
 using Microsoft.SharePoint.Client;
 using System.Globalization;
-using Microsoft.SharePoint.Taxonomy;
+using Microsoft.SharePoint.Client.Taxonomy;
 
 namespace K2Field.K2NE.SPContentBroker.Helpers
 {
@@ -290,30 +290,32 @@ namespace K2Field.K2NE.SPContentBroker.Helpers
            
             TaxonomyFieldValueCollection taxanomyValues = FieldValue as TaxonomyFieldValueCollection;
 
-            foreach (TaxonomyFieldValue taxanomyValue in taxanomyValues)
+            if (taxanomyValues != null)
             {
-                if (taxanomyValue != null)
+                foreach (TaxonomyFieldValue taxanomyValue in taxanomyValues)
                 {
-                    strMultiComplete = strMultiComplete.AppendFormat("{0};", taxanomyValue.TermGuid);
+                    if (taxanomyValue != null)
+                    {
+                        strMultiComplete = strMultiComplete.AppendFormat("{0};", taxanomyValue.TermGuid);
 
-                    strMultiValue = strMultiValue.AppendFormat("{0};", taxanomyValue.Label);
+                        strMultiValue = strMultiValue.AppendFormat("{0};", taxanomyValue.Label);
+                    }
                 }
+
+                if (strMultiComplete.Length > 0)
+                {
+                    LookupMultiComplete = strMultiComplete.ToString().Substring(0, strMultiComplete.Length - 1);
+
+                }
+
+                if (strMultiValue.Length > 0)
+                {
+                    LookupMultiValue = strMultiValue.ToString().Substring(0, strMultiValue.Length - 1);
+                }
+
+                newRow[prop.Name] = LookupMultiComplete;
+                newRow[prop.Name + Constants.InternalProperties.Suffix_Value] = strMultiValue;
             }
-
-            if (strMultiComplete.Length > 0)
-            {
-                LookupMultiComplete = strMultiComplete.ToString().Substring(0, strMultiComplete.Length - 1);
-
-            }
-
-            if (strMultiValue.Length > 0)
-            {
-                LookupMultiValue = strMultiValue.ToString().Substring(0, strMultiValue.Length - 1);
-            }
-
-            newRow[prop.Name] = LookupMultiComplete;
-            newRow[prop.Name + Constants.InternalProperties.Suffix_Value] = strMultiValue;
-
         }
 
         //private void addTaxonomyFieldValue(DataRow newRow, Property prop, object fieldValue)
