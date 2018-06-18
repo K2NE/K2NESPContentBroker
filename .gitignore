@@ -8,4 +8,6 @@
 /Release
 *.suo
 /Release.zip
-!/Solution Files/*/*/*.dll
+
+
+!/Solution Files/*SharePointAssemblies/*/*.dll
