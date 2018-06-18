@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "K2Field.K2NE.SPContentBroker", "K2Field.K2NE.SPContentBroker\K2Field.K2NE.SPContentBroker.csproj", "{5D45A104-69BD-4B55-A255-9BCC629D62DF}"
 EndProject
@@ -21,6 +21,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Installer", "Installer", "{
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharePointAssemblies", "SharePointAssemblies", "{A1854C32-187D-48DB-B5DF-BE0BEFB2A90B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "v15", "v15", "{919B99C2-7173-461C-AF18-A2CF9818F34E}"
 	ProjectSection(SolutionItems) = preProject
 		Solution Files\SharePointAssemblies\Microsoft.SharePoint.Client.dll = Solution Files\SharePointAssemblies\Microsoft.SharePoint.Client.dll
 		Solution Files\SharePointAssemblies\Microsoft.SharePoint.Client.DocumentManagement.dll = Solution Files\SharePointAssemblies\Microsoft.SharePoint.Client.DocumentManagement.dll
@@ -28,14 +30,27 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharePointAssemblies", "Sha
 		Solution Files\SharePointAssemblies\Microsoft.SharePoint.Client.Taxonomy.dll = Solution Files\SharePointAssemblies\Microsoft.SharePoint.Client.Taxonomy.dll
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "v16", "v16", "{E57C93B1-07B9-4E5D-8E5E-0F53C3A10629}"
+	ProjectSection(SolutionItems) = preProject
+		C:\Program Files\Common Files\microsoft shared\Web Server Extensions\16\ISAPI\Microsoft.SharePoint.Client.dll = C:\Program Files\Common Files\microsoft shared\Web Server Extensions\16\ISAPI\Microsoft.SharePoint.Client.dll
+		C:\Program Files\Common Files\microsoft shared\Web Server Extensions\16\ISAPI\Microsoft.SharePoint.Client.DocumentManagement.dll = C:\Program Files\Common Files\microsoft shared\Web Server Extensions\16\ISAPI\Microsoft.SharePoint.Client.DocumentManagement.dll
+		C:\Program Files\Common Files\microsoft shared\Web Server Extensions\16\ISAPI\Microsoft.SharePoint.Client.Runtime.dll = C:\Program Files\Common Files\microsoft shared\Web Server Extensions\16\ISAPI\Microsoft.SharePoint.Client.Runtime.dll
+		C:\Program Files\Common Files\microsoft shared\Web Server Extensions\16\ISAPI\Microsoft.SharePoint.Client.Taxonomy.dll = C:\Program Files\Common Files\microsoft shared\Web Server Extensions\16\ISAPI\Microsoft.SharePoint.Client.Taxonomy.dll
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "o365", "o365", "{A3230717-AD18-4824-8EE9-BDA37DBCE68B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug-v2013|Any CPU = Debug-v2013|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{5D45A104-69BD-4B55-A255-9BCC629D62DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5D45A104-69BD-4B55-A255-9BCC629D62DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D45A104-69BD-4B55-A255-9BCC629D62DF}.Debug-v2013|Any CPU.ActiveCfg = Debug-v2013|Any CPU
+		{5D45A104-69BD-4B55-A255-9BCC629D62DF}.Debug-v2013|Any CPU.Build.0 = Debug-v2013|Any CPU
 		{5D45A104-69BD-4B55-A255-9BCC629D62DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5D45A104-69BD-4B55-A255-9BCC629D62DF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
@@ -44,5 +59,8 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{A1854C32-187D-48DB-B5DF-BE0BEFB2A90B} = {4017A511-A69A-4E60-AF25-4584045583A9}
+		{919B99C2-7173-461C-AF18-A2CF9818F34E} = {A1854C32-187D-48DB-B5DF-BE0BEFB2A90B}
+		{E57C93B1-07B9-4E5D-8E5E-0F53C3A10629} = {A1854C32-187D-48DB-B5DF-BE0BEFB2A90B}
+		{A3230717-AD18-4824-8EE9-BDA37DBCE68B} = {A1854C32-187D-48DB-B5DF-BE0BEFB2A90B}
 	EndGlobalSection
 EndGlobal

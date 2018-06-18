@@ -8,3 +8,4 @@
 /Release
 *.suo
 /Release.zip
+!/Solution Files/*/*/*.dll
