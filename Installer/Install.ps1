@@ -87,6 +87,10 @@ $scriptPath = split-path -parent $MyInvocation.MyCommand.Definition
 
 StopK2Service -server localhost 
 Copy-Item $scriptPath\* -Include $brokerDLL -Destination "$targetPath\ServiceBroker"
+Copy-Item $scriptPath\* -Include "Microsoft.SharePoint.Client.dll" -Destination "$targetPath\ServiceBroker"
+Copy-Item $scriptPath\* -Include "Microsoft.SharePoint.Client.Runtime.dll" -Destination "$targetPath\ServiceBroker"
+Copy-Item $scriptPath\* -Include "Microsoft.SharePoint.Client.DocumentManagement.dll" -Destination "$targetPath\ServiceBroker"
+Copy-Item $scriptPath\* -Include "Microsoft.SharePoint.Client.Taxonomy.dll" -Destination "$targetPath\ServiceBroker"
 StartK2Service -server localhost
 
 

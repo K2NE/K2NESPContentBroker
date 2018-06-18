@@ -8,6 +8,7 @@ using SourceCode.SmartObjects.Services.ServiceSDK.Types;
 using System.Text.RegularExpressions;
 using Microsoft.SharePoint.Client;
 using System.Globalization;
+using Microsoft.SharePoint.Client.Taxonomy;
 
 namespace K2Field.K2NE.SPContentBroker.Helpers
 {
@@ -22,7 +23,7 @@ namespace K2Field.K2NE.SPContentBroker.Helpers
 
             foreach (Field destinationField in destinationItem.ParentList.Fields)
             {
-                if (string.Compare(destinationField.InternalName, "Attachments") != 0)
+                if (string.Compare(destinationField.InternalName, Constants.SharePointProperties.Attachments) != 0 && string.Compare(destinationField.InternalName, Constants.SharePointProperties.ContentType) != 0)
                 {
                         Field sourceField = sourceItem.ParentList.Fields.Where(f => string.Compare(f.InternalName, destinationField.InternalName) == 0
                         && f.FieldTypeKind == destinationField.FieldTypeKind && !f.ReadOnlyField && !f.Hidden).FirstOrDefault();
@@ -162,6 +163,20 @@ namespace K2Field.K2NE.SPContentBroker.Helpers
                         newRow[prop.Name] = UserMultiValue.ToString();
                     }
                     break;
+                case FieldType.Invalid:
+                     if (string.Compare(prop.MetaData.GetServiceElement<string>(Constants.InternalProperties.SPFieldType), Constants.SharePointProperties.TaxanomyFieldType) == 0)
+                    {                       
+                        addTaxonomyFieldValue(newRow, prop, fieldValue);
+                    }
+                    else if (string.Compare(prop.MetaData.GetServiceElement<string>(Constants.InternalProperties.SPFieldType), Constants.SharePointProperties.TaxanomyFieldTypeMulti) == 0)
+                    {
+                        addMultiTaxonomyFieldValue(newRow, prop, fieldValue);
+                    }
+                    else
+                    {
+                        newRow[prop.Name] = fieldValue.ToString();
+                    }
+                    break;
                 //TODO case FieldType.Invalid: Depending upon TypeAsString value. But this needs to be implemented case by case basis.
                 case FieldType.Text:
                 case FieldType.Choice:
@@ -255,11 +270,59 @@ namespace K2Field.K2NE.SPContentBroker.Helpers
             newRow[prop.Name + Constants.InternalProperties.Suffix_Value] = strMultiValue;
         }
 
-        private void addTaxonomyFieldValue(DataRow newRow, Property prop, object fieldValue)
+        private static void addTaxonomyFieldValue(DataRow newRow, Property prop, object FieldValue)
         {
-            string[] strArray = fieldValue.ToString().Split('|');
-            newRow[prop.Name] = string.Concat(strArray.GetValue(1).ToString(), ";#", strArray.GetValue(0).ToString());
+             TaxonomyFieldValue taxanomyValue = FieldValue as TaxonomyFieldValue;
+
+             if (taxanomyValue != null)
+            {
+                newRow[prop.Name] = taxanomyValue.TermGuid;
+                newRow[prop.Name + Constants.InternalProperties.Suffix_Value] = taxanomyValue.Label;
+            }
         }
+
+        private static void addMultiTaxonomyFieldValue(DataRow newRow, Property prop, object FieldValue)
+        {
+            string LookupMultiComplete = string.Empty;
+            string LookupMultiValue = string.Empty;
+            StringBuilder strMultiComplete = new StringBuilder();
+            StringBuilder strMultiValue = new StringBuilder();
+           
+            TaxonomyFieldValueCollection taxanomyValues = FieldValue as TaxonomyFieldValueCollection;
+
+            if (taxanomyValues != null)
+            {
+                foreach (TaxonomyFieldValue taxanomyValue in taxanomyValues)
+                {
+                    if (taxanomyValue != null)
+                    {
+                        strMultiComplete = strMultiComplete.AppendFormat("{0};", taxanomyValue.TermGuid);
+
+                        strMultiValue = strMultiValue.AppendFormat("{0};", taxanomyValue.Label);
+                    }
+                }
+
+                if (strMultiComplete.Length > 0)
+                {
+                    LookupMultiComplete = strMultiComplete.ToString().Substring(0, strMultiComplete.Length - 1);
+
+                }
+
+                if (strMultiValue.Length > 0)
+                {
+                    LookupMultiValue = strMultiValue.ToString().Substring(0, strMultiValue.Length - 1);
+                }
+
+                newRow[prop.Name] = LookupMultiComplete;
+                newRow[prop.Name + Constants.InternalProperties.Suffix_Value] = strMultiValue;
+            }
+        }
+
+        //private void addTaxonomyFieldValue(DataRow newRow, Property prop, object fieldValue)
+        //{
+        //    string[] strArray = fieldValue.ToString().Split('|');
+        //    newRow[prop.Name] = string.Concat(strArray.GetValue(1).ToString(), ";#", strArray.GetValue(0).ToString());
+        //}
 
         public static void AssignFieldValue(ListItem listItem, Property prop)
         {
@@ -351,7 +414,6 @@ namespace K2Field.K2NE.SPContentBroker.Helpers
                     break;
             }
         }
-
 
         public static Properties GetSearchFields(Properties inputs)
         {

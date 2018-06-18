@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "K2Field.K2NE.SPContentBroker", "K2Field.K2NE.SPContentBroker\K2Field.K2NE.SPContentBroker.csproj", "{5D45A104-69BD-4B55-A255-9BCC629D62DF}"
 EndProject
@@ -11,12 +11,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Files", "Solution 
 		Solution Files\K2NE SP Content Broker.docx = Solution Files\K2NE SP Content Broker.docx
 		LICENSE.txt = LICENSE.txt
 		README.md = README.md
+		Solution Files\Release Notes.docx = Solution Files\Release Notes.docx
 		Solution Files\UpdateBuildNr.ps1 = Solution Files\UpdateBuildNr.ps1
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Installer", "Installer", "{08DF0BF4-1924-40FE-B909-7B3A985F3C12}"
 	ProjectSection(SolutionItems) = preProject
 		Installer\Install.ps1 = Installer\Install.ps1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharePointAssemblies", "SharePointAssemblies", "{A1854C32-187D-48DB-B5DF-BE0BEFB2A90B}"
+	ProjectSection(SolutionItems) = preProject
+		Solution Files\SharePointAssemblies\Microsoft.SharePoint.Client.dll = Solution Files\SharePointAssemblies\Microsoft.SharePoint.Client.dll
+		Solution Files\SharePointAssemblies\Microsoft.SharePoint.Client.DocumentManagement.dll = Solution Files\SharePointAssemblies\Microsoft.SharePoint.Client.DocumentManagement.dll
+		Solution Files\SharePointAssemblies\Microsoft.SharePoint.Client.Runtime.dll = Solution Files\SharePointAssemblies\Microsoft.SharePoint.Client.Runtime.dll
+		Solution Files\SharePointAssemblies\Microsoft.SharePoint.Client.Taxonomy.dll = Solution Files\SharePointAssemblies\Microsoft.SharePoint.Client.Taxonomy.dll
 	EndProjectSection
 EndProject
 Global
@@ -32,5 +41,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A1854C32-187D-48DB-B5DF-BE0BEFB2A90B} = {4017A511-A69A-4E60-AF25-4584045583A9}
 	EndGlobalSection
 EndGlobal
