@@ -70,5 +70,11 @@ namespace K2Field.K2NE.SPContentBroker.Constants
         public const string GetFolderPermissionByName = "Get Folder Permission Name";
         public const string GetItemPermissionById = "Get Item Permission By Id";
         #endregion
+
+        #region Content Type Gallery methods
+        public const string GetContentTypeByName = "Get Content Type By Name";
+        public const string GetContentTypeById = "Get Content Type By Id";
+        public const string GetContentTypes = "Get Content Types";
+        #endregion
     }
 }
