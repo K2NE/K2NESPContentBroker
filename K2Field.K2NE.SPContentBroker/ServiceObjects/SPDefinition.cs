@@ -131,8 +131,33 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
                     }
                 }
 
+                ServiceObject ctSo = Helper.CreateServiceObject("ContentTypes", "Content Types", "Manage the collection of content types, which enables consistent handling of content across sites.");
+
+                ctSo.MetaData.DisplayName = "Content Types";
+                ctSo.MetaData.Description = "Manage the collection of content types, which enables consistent handling of content across sites.";
+                ctSo.MetaData.AddServiceElement(Constants.InternalProperties.ServiceFolder, "Management");
+
+                ctSo.Properties.Add(Helper.CreateSpecificProperty(Constants.SOProperties.ContentTypeName, "Name", "Name", SoType.Text));
+                //so.Properties.Add(Helper.CreateSpecificProperty("SiteURL", "Site URL", "Site URL", SoType.Text));
+                ctSo.Properties.Add(Helper.CreateSpecificProperty(Constants.SOProperties.ContentTypeGroup, "Group", "Group", SoType.Text));
+                ctSo.Properties.Add(Helper.CreateSpecificProperty(Constants.SOProperties.ContentTypeReadOnly, "ReadOnly", "ReadOnly", SoType.YesNo));
+                ctSo.Properties.Add(Helper.CreateSpecificProperty(Constants.SOProperties.ContentTypeHidden, "Hidden", "Hidden", SoType.Text));
+                ctSo.Properties.Add(Helper.CreateSpecificProperty(Constants.SOProperties.ContentTypeCount, "Count", "Count", SoType.Number));
+                ctSo.Properties.Add(Helper.CreateSpecificProperty(Constants.SOProperties.ContentTypeID, "Content Type ID", "Content Type ID", SoType.Text));
+
+                AddContentTypeServiceObjectMethods(ctSo);
+
+                SOs.Add(ctSo);
+
                 return SOs;
             }
+        }
+
+        private void AddContentTypeServiceObjectMethods(ServiceObject ctSo)
+        {
+            AddGetContentTypeByNameMethod(ctSo);
+            AddGetContentTypeByIdMethod(ctSo);
+            AddGetContentTypesMethod(ctSo);
         }
 
         public override void Execute()
@@ -252,6 +277,17 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
                     break;
                 case Constants.Methods.DeleteDocumentSetByName:
                     ExecuteDeleteDocSet();
+                    break;
+
+                case Constants.Methods.GetContentTypeByName:
+                    ExecuteGetContentTypeByName();
+                    break;
+                case Constants.Methods.GetContentTypeById:
+                    ExecuteGetContentTypeById();
+                    break;
+
+                case Constants.Methods.GetContentTypes:
+                    ExecuteGetContentTypes();
                     break;
             }
         }
