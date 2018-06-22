@@ -14,3 +14,6 @@ First bugfix release that added some functionality.
 - Improvements in loading of ServiceObjects when multiple service instances were created.
 - Reviewed a number of performance elements to make the service broker perform better.
 - Added open source license.
+
+## V2.3
+- Add support for different SP versions using build configuration.
