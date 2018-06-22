@@ -177,7 +177,7 @@
     <Compile Include="Helpers\PropertyExtensions.cs" />
     <Compile Include="Helpers\ServiceObjectExtensions.cs" />
     <Compile Include="Helpers\SPHelper.cs" />
-    <Compile Include="K2NEServiceBroker.cs" />
+    <Compile Include="SPContentBroker.cs" />
     <Compile Include="Helpers\Helper.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Helpers\MapHelper.cs" />
