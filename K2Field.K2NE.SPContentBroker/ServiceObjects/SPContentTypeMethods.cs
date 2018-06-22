@@ -63,7 +63,7 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
                 Web spWeb = context.Web;
                 context.Load(spWeb);
 
-                var ctColl = spWeb.ContentTypes;
+                var ctColl = spWeb.AvailableContentTypes;
                 context.Load(ctColl);
                 context.ExecuteQuery();
 
@@ -73,17 +73,22 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
                 {
                     DataRow dataRow = results.NewRow();
 
-                    dataRow[Constants.SOProperties.ContentTypeName] = cType.Name;
-                    dataRow[Constants.SOProperties.ContentTypeGroup] = cType.Group;
-                    dataRow[Constants.SOProperties.ContentTypeReadOnly] = cType.ReadOnly;
-                    dataRow[Constants.SOProperties.ContentTypeHidden] = cType.Hidden;
-                    dataRow[Constants.SOProperties.ContentTypeCount] = 0;
-                    dataRow[Constants.SOProperties.ContentTypeID] = cType.StringId;
+                    PopulateDataRow(cType, dataRow);
 
                     results.Rows.Add(dataRow);
-                }               
-                
+                }
+
             }
+        }
+
+        private static void PopulateDataRow(ContentType cType, DataRow dataRow)
+        {
+            dataRow[Constants.SOProperties.ContentTypeName] = cType.Name;
+            dataRow[Constants.SOProperties.ContentTypeGroup] = cType.Group;
+            dataRow[Constants.SOProperties.ContentTypeReadOnly] = cType.ReadOnly;
+            dataRow[Constants.SOProperties.ContentTypeHidden] = cType.Hidden;
+            dataRow[Constants.SOProperties.ContentTypeCount] = 0;
+            dataRow[Constants.SOProperties.ContentTypeID] = cType.StringId;
         }
         #endregion
 
@@ -135,7 +140,7 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
                 Web spWeb = context.Web;
                 context.Load(spWeb);
 
-                var ctColl = spWeb.ContentTypes;
+                var ctColl = spWeb.AvailableContentTypes;
                 context.Load(ctColl);
                 //context.ExecuteQuery();
 
@@ -147,12 +152,7 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
                 {
                     DataRow dataRow = results.NewRow();
 
-                    dataRow[Constants.SOProperties.ContentTypeName] = cType.Name;
-                    dataRow[Constants.SOProperties.ContentTypeGroup] = cType.Group;
-                    dataRow[Constants.SOProperties.ContentTypeReadOnly] = cType.ReadOnly;
-                    dataRow[Constants.SOProperties.ContentTypeHidden] = cType.Hidden;
-                    dataRow[Constants.SOProperties.ContentTypeCount] = 0;
-                    dataRow[Constants.SOProperties.ContentTypeID] = cType.StringId;
+                    PopulateDataRow(cType, dataRow);
 
                     results.Rows.Add(dataRow);
                 }
@@ -173,8 +173,8 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
 
             foreach (Property prop in so.Properties)
             {
-                
-                    mGetContentTypeById.InputProperties.Add(prop);                
+
+                mGetContentTypeById.InputProperties.Add(prop);
 
                 mGetContentTypeById.ReturnProperties.Add(prop);
 
@@ -189,7 +189,18 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
             serviceObject.Properties.InitResultTable();
             DataTable results = base.ServiceBroker.ServicePackage.ResultTable;
 
-           
+            string ctHidden = string.Empty;
+            string ctGroup = string.Empty;
+            string ctId = String.Empty;
+
+            ctHidden = base.GetStringProperty(Constants.SOProperties.ContentTypeHidden, false);
+            ctGroup = base.GetStringProperty(Constants.SOProperties.ContentTypeGroup, false);
+            ctId = base.GetStringProperty(Constants.SOProperties.ContentTypeID, false);
+
+            //if (String.IsNullOrWhiteSpace(ctId))
+            //{
+            //    return;
+            //}
 
             string siteURL = GetSiteURL();
 
@@ -198,25 +209,44 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
                 Web spWeb = context.Web;
                 context.Load(spWeb);
 
-                var ctColl = spWeb.ContentTypes;
+                var ctColl = spWeb.AvailableContentTypes;
                 context.Load(ctColl);
+
+                IQueryable<ContentType> filterQuery = ctColl;
+
+                if (!String.IsNullOrWhiteSpace(ctHidden))
+                {
+                    bool isHidden = Convert.ToBoolean(ctHidden.Trim());
+                    filterQuery = filterQuery.Where(ct => ct.Hidden == isHidden);
+                }
+
+                if (!String.IsNullOrWhiteSpace(ctGroup))
+                {
+
+                    filterQuery = filterQuery.Where(ct => ct.Group == ctGroup);
+                }
+
+                if (!String.IsNullOrWhiteSpace(ctId))
+                {
+                    //filterQuery = filterQuery.Where(ct => ct.Group.StartsWith(ctId) == true);
+
+                    filterQuery = filterQuery.Where(ct => ct.StringId == ctId);
+
+                }
+
+                IEnumerable<ContentType> _results = context.LoadQuery<ContentType>(filterQuery);
                 //context.ExecuteQuery();               
                 context.ExecuteQuery();
 
 
-                foreach (var item in ctColl)
+                foreach (var item in _results)
                 {
                     DataRow dataRow = results.NewRow();
 
-                    dataRow[Constants.SOProperties.ContentTypeName] = item.Name;
-                    dataRow[Constants.SOProperties.ContentTypeGroup] = item.Group;
-                    dataRow[Constants.SOProperties.ContentTypeReadOnly] = item.ReadOnly;
-                    dataRow[Constants.SOProperties.ContentTypeHidden] = item.Hidden;
-                    dataRow[Constants.SOProperties.ContentTypeCount] = 0;
-                    dataRow[Constants.SOProperties.ContentTypeID] = item.StringId;
+                    PopulateDataRow(item, dataRow);
 
                     results.Rows.Add(dataRow);
-                }               
+                }
 
             }
         }
