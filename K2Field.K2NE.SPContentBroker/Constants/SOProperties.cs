@@ -65,6 +65,7 @@ namespace K2Field.K2NE.SPContentBroker.Constants
         public const string ContentTypeHidden = "Hidden";
         public const string ContentTypeCount = "Count";
         public const string ContentTypeID = "ContentTypeID";
+        public const string ContentTypeParent = "Parent";
 
 
     }

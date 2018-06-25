@@ -75,6 +75,7 @@ namespace K2Field.K2NE.SPContentBroker.Constants
         public const string GetContentTypeByName = "Get Content Type By Name";
         public const string GetContentTypeById = "Get Content Type By Id";
         public const string GetContentTypes = "Get Content Types";
+        public const string GetContentTypesByParent = "Get Content Types By Parent";
         #endregion
     }
 }

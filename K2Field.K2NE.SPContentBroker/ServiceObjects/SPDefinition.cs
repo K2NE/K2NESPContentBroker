@@ -158,6 +158,7 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
             AddGetContentTypeByNameMethod(ctSo);
             AddGetContentTypeByIdMethod(ctSo);
             AddGetContentTypesMethod(ctSo);
+            AddGetContentTypesByParentMethod(ctSo);
         }
 
         public override void Execute()
@@ -288,6 +289,10 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
 
                 case Constants.Methods.GetContentTypes:
                     ExecuteGetContentTypes();
+                    break;
+
+                case Constants.Methods.GetContentTypesByParent:
+                    ExecuteGetContentTypesByParent();
                     break;
             }
         }
