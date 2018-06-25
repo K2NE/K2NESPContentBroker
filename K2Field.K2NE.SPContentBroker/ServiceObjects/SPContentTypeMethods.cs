@@ -142,7 +142,7 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
 
                 var ctColl = spWeb.AvailableContentTypes;
                 context.Load(ctColl);
-                //context.ExecuteQuery();
+              
 
                 var cType = ctColl.GetById(ctId);
                 context.Load(cType);
@@ -212,7 +212,7 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
                 filterQuery = ComposeQuery(ctHidden, ctGroup, ctId, filterQuery);
 
                 IEnumerable<ContentType> _results = context.LoadQuery<ContentType>(filterQuery);
-                //context.ExecuteQuery();               
+                              
                 context.ExecuteQuery();
 
 
@@ -229,6 +229,7 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
         }
 
         #endregion
+        
         #region Get Content Types By Parent
         private void AddGetContentTypesByParentMethod(ServiceObject so)
         {
@@ -274,7 +275,7 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
                 IQueryable<ContentType> filterQuery = ctColl.Where(ct => parentCtName == ct.Parent.Name);               
 
                 IEnumerable<ContentType> _results = context.LoadQuery<ContentType>(filterQuery);
-                //context.ExecuteQuery();               
+            
                 context.ExecuteQuery();
 
 
@@ -289,7 +290,9 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
 
             }
         }
+        #endregion
 
+        #region private methods
 
         private static IQueryable<ContentType> ComposeQuery(string ctHidden, string ctGroup, string ctId, IQueryable<ContentType> filterQuery)
         {
