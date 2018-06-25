@@ -2,9 +2,25 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
+# Build results
+
+[Dd]ebug/
+[Dd]ebug-v2013/
+[Dd]ebug-v2016/
+[Rr]elease/
+[Rr]elease-v2013/
+[Rr]elease-v2016/
+x64/
+build/
+[Bb]in/
+[Oo]bj/*
+
 *.dll
 *.pdb
 /K2Field.K2NE.SPContentBroker/obj/Debug
 /Release
 *.suo
 /Release.zip
+
+
+!/Solution Files/SharePointAssemblies/*/*.dll
