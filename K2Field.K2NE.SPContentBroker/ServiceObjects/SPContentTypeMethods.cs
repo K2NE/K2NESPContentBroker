@@ -195,12 +195,8 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
 
             ctHidden = base.GetStringProperty(Constants.SOProperties.ContentTypeHidden, false);
             ctGroup = base.GetStringProperty(Constants.SOProperties.ContentTypeGroup, false);
-            ctId = base.GetStringProperty(Constants.SOProperties.ContentTypeID, false);
+            //ctId = base.GetStringProperty(Constants.SOProperties.ContentTypeID, false);
 
-            //if (String.IsNullOrWhiteSpace(ctId))
-            //{
-            //    return;
-            //}
 
             string siteURL = GetSiteURL();
 
@@ -213,26 +209,7 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
                 context.Load(ctColl);
 
                 IQueryable<ContentType> filterQuery = ctColl;
-
-                if (!String.IsNullOrWhiteSpace(ctHidden))
-                {
-                    bool isHidden = Convert.ToBoolean(ctHidden.Trim());
-                    filterQuery = filterQuery.Where(ct => ct.Hidden == isHidden);
-                }
-
-                if (!String.IsNullOrWhiteSpace(ctGroup))
-                {
-
-                    filterQuery = filterQuery.Where(ct => ct.Group == ctGroup);
-                }
-
-                if (!String.IsNullOrWhiteSpace(ctId))
-                {
-                    //filterQuery = filterQuery.Where(ct => ct.Group.StartsWith(ctId) == true);
-
-                    filterQuery = filterQuery.Where(ct => ct.StringId == ctId);
-
-                }
+                filterQuery = ComposeQuery(ctHidden, ctGroup, ctId, filterQuery);
 
                 IEnumerable<ContentType> _results = context.LoadQuery<ContentType>(filterQuery);
                 //context.ExecuteQuery();               
@@ -249,6 +226,99 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
                 }
 
             }
+        }
+
+        #endregion
+        #region Get Content Types By Parent
+        private void AddGetContentTypesByParentMethod(ServiceObject so)
+        {
+            Method mGetContentTypeById = Helper.CreateMethod(Constants.Methods.GetContentTypesByParent, "Retrieve metadata for one item by it's ID", MethodType.List);
+            if (base.IsDynamicSiteURL)
+            {
+                Helper.AddSiteURLParameter(mGetContentTypeById);
+            }
+
+            Helper.AddStringParameter(mGetContentTypeById, Constants.SOProperties.ContentTypeParent);
+
+            foreach (Property prop in so.Properties)
+            {
+               
+                mGetContentTypeById.ReturnProperties.Add(prop);
+
+            }
+
+            so.Methods.Add(mGetContentTypeById);
+        }
+
+        private void ExecuteGetContentTypesByParent()
+        {
+            ServiceObject serviceObject = ServiceBroker.Service.ServiceObjects[0];
+            serviceObject.Properties.InitResultTable();
+            DataTable results = base.ServiceBroker.ServicePackage.ResultTable;
+
+            string parentCtName = string.Empty;
+
+            parentCtName = base.GetStringParameter(Constants.SOProperties.ContentTypeParent, true);          
+
+
+            string siteURL = GetSiteURL();
+
+            using (ClientContext context = InitializeContext(siteURL))
+            {
+                Web spWeb = context.Web;
+                context.Load(spWeb);
+
+                var ctColl = spWeb.AvailableContentTypes;
+                context.Load(ctColl);
+
+                IQueryable<ContentType> filterQuery = ctColl.Where(ct => parentCtName == ct.Parent.Name);               
+
+                IEnumerable<ContentType> _results = context.LoadQuery<ContentType>(filterQuery);
+                //context.ExecuteQuery();               
+                context.ExecuteQuery();
+
+
+                foreach (var item in _results)
+                {
+                    DataRow dataRow = results.NewRow();
+
+                    PopulateDataRow(item, dataRow);
+
+                    results.Rows.Add(dataRow);
+                }
+
+            }
+        }
+
+
+        private static IQueryable<ContentType> ComposeQuery(string ctHidden, string ctGroup, string ctId, IQueryable<ContentType> filterQuery)
+        {
+
+            if (!String.IsNullOrWhiteSpace(ctHidden) && !String.IsNullOrWhiteSpace(ctGroup))
+            {
+                bool isHidden = Convert.ToBoolean(ctHidden.Trim());
+                filterQuery = filterQuery.Where(ct => ct.Hidden == isHidden && ct.Group == ctGroup);
+                return filterQuery;
+            }
+           
+            else if(!String.IsNullOrWhiteSpace(ctHidden))
+            {
+                bool isHidden = Convert.ToBoolean(ctHidden.Trim());
+                filterQuery = filterQuery.Where(ct => ct.Hidden == isHidden);
+                return filterQuery;
+            }
+
+            else if(!String.IsNullOrWhiteSpace(ctGroup))
+            {
+
+                filterQuery = filterQuery.Where(ct => ct.Group == ctGroup);
+                return filterQuery;
+            }
+
+            else { 
+            return filterQuery;
+            }
+
         }
         #endregion
     }
