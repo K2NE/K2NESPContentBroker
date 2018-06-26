@@ -58,5 +58,16 @@ namespace K2Field.K2NE.SPContentBroker.Constants
         public const string Permission_DisplayName = "Permission";
         public const string UserOrGroup = "K2_UserOrGroup";
         public const string UserOrGroup_DisplayName = "UserOrGroup";
+
+        //properties and parameters used in content type methods
+        public const string ContentTypeName = "Name";
+        public const string ContentTypeGroup = "Group";
+        public const string ContentTypeReadOnly = "ReadOnly";
+        public const string ContentTypeHidden = "Hidden";
+        public const string ContentTypeCount = "Count";
+        public const string ContentTypeID = "ContentTypeID";
+        public const string ContentTypeParent = "ParentContentType";
+
+
     }
 }

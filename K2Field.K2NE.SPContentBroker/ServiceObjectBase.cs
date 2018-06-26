@@ -259,12 +259,16 @@ namespace K2Field.K2NE.SPContentBroker
             if (p == null)
             {
                 if (isRequired)
+                {
                     throw new ArgumentException(string.Format(Constants.ErrorMessages.RequiredPropertyNotFound, name));
+                }
                 return string.Empty;
             }
             string val = p.Value as string;
-            if (isRequired && string.IsNullOrEmpty(val))
+            if (isRequired && string.IsNullOrWhiteSpace(val)) 
+            {
                 throw new ArgumentException(string.Format("{0} is required but is empty.", name));
+            }
 
             return val;
         }
@@ -277,12 +281,16 @@ namespace K2Field.K2NE.SPContentBroker
             if (p == null)
             {
                 if (isRequired)
+                {
                     throw new ArgumentException(string.Format(Constants.ErrorMessages.RequiredParameterNotFound, name));
+                }
                 return string.Empty;
             }
             string val = p.Value as string;
-            if (isRequired && string.IsNullOrEmpty(val))
+            if (isRequired && string.IsNullOrWhiteSpace(val))
+            {
                 throw new ArgumentException(string.Format("{0} is required but is empty.", name));
+            }
 
             return val;
         }
@@ -305,15 +313,21 @@ namespace K2Field.K2NE.SPContentBroker
             if (p == null)
             {
                 if (isRequred)
+                {
                     throw new ArgumentException(string.Format(Constants.ErrorMessages.RequiredPropertyNotFound, name));
+                }
                 return 0;
             }
             string val = p.Value as string;
             int ret;
             if (int.TryParse(val, out ret))
+            {
                 return ret;
+            }
             if (isRequred)
+            {
                 throw new ArgumentException(string.Format("{0} could not be parsed to a Integer", name));
+            }
 
             return 0;
         }
@@ -324,15 +338,21 @@ namespace K2Field.K2NE.SPContentBroker
             if (p == null)
             {
                 if (isRequired)
+                {
                     throw new ArgumentException(string.Format(Constants.ErrorMessages.RequiredPropertyNotFound, name));
+                }
                 return 0;
             }
             string val = p.Value as string;
             short ret;
             if (short.TryParse(val, out ret))
+            {
                 return ret;
+            }
             if (isRequired)
+            {
                 throw new ArgumentException(string.Format("{0} could not be parsed to a Integer", name));
+            }
 
             return 0;
         }
@@ -371,15 +391,21 @@ namespace K2Field.K2NE.SPContentBroker
             if (p == null)
             {
                 if (isRequired)
+                {
                     throw new ArgumentException(string.Format(Constants.ErrorMessages.RequiredPropertyNotFound, name));
+                }
                 return 0;
             }
             string val = p.Value as string;
             byte ret;
             if (byte.TryParse(val, out ret))
+            {
                 return ret;
+            }
             if (isRequired)
+            {
                 throw new ArgumentException(string.Format("{0} could not be parsed to a Byte.", name));
+            }
             return 0;
         }
 
@@ -389,15 +415,21 @@ namespace K2Field.K2NE.SPContentBroker
             if (p == null)
             {
                 if (isRequired)
+                {
                     throw new ArgumentException(string.Format(Constants.ErrorMessages.RequiredPropertyNotFound, name));
+                }
                 return Guid.Empty;
             }
             string val = p.Value as string;
             Guid ret;
             if (Guid.TryParse(val, out ret))
+            {
                 return ret;
+            }
             if (isRequired)
+            {
                 throw new ArgumentException(string.Format("{0} could not be parsed to a Guid.", name));
+            }
             return Guid.Empty;
         }
 
