@@ -46,15 +46,7 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
             serviceObject.Properties.InitResultTable();
             DataTable results = base.ServiceBroker.ServicePackage.ResultTable;
 
-            string ctName = String.Empty;
-
-            ctName = base.GetStringProperty(Constants.SOProperties.ContentTypeName, true).Trim();
-
-            if (String.IsNullOrWhiteSpace(ctName))
-            {
-                return;
-            }
-
+            string ctName = base.GetStringProperty(Constants.SOProperties.ContentTypeName, true);
 
             string siteURL = GetSiteURL();
 
@@ -123,14 +115,7 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
             serviceObject.Properties.InitResultTable();
             DataTable results = base.ServiceBroker.ServicePackage.ResultTable;
 
-            string ctId = String.Empty;
-
-            ctId = base.GetStringProperty(Constants.SOProperties.ContentTypeID, true).Trim();
-
-            if (String.IsNullOrWhiteSpace(ctId))
-            {
-                return;
-            }
+            string ctId = base.GetStringProperty(Constants.SOProperties.ContentTypeID, true);
 
 
             string siteURL = GetSiteURL();
@@ -189,14 +174,8 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
             serviceObject.Properties.InitResultTable();
             DataTable results = base.ServiceBroker.ServicePackage.ResultTable;
 
-            string ctHidden = string.Empty;
-            string ctGroup = string.Empty;
-            string ctId = String.Empty;
-
-            ctHidden = base.GetStringProperty(Constants.SOProperties.ContentTypeHidden, false);
-            ctGroup = base.GetStringProperty(Constants.SOProperties.ContentTypeGroup, false);
-            //ctId = base.GetStringProperty(Constants.SOProperties.ContentTypeID, false);
-
+            string ctHidden = base.GetStringProperty(Constants.SOProperties.ContentTypeHidden, false);
+            string ctGroup = base.GetStringProperty(Constants.SOProperties.ContentTypeGroup, false);
 
             string siteURL = GetSiteURL();
 
@@ -209,7 +188,7 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
                 context.Load(ctColl);
 
                 IQueryable<ContentType> filterQuery = ctColl;
-                filterQuery = ComposeQuery(ctHidden, ctGroup, ctId, filterQuery);
+                filterQuery = ComposeQuery(ctHidden, ctGroup, string.Empty, filterQuery);
 
                 IEnumerable<ContentType> _results = context.LoadQuery<ContentType>(filterQuery);
                               
@@ -257,11 +236,7 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
             serviceObject.Properties.InitResultTable();
             DataTable results = base.ServiceBroker.ServicePackage.ResultTable;
 
-            string parentCtName = string.Empty;
-
-            parentCtName = base.GetStringParameter(Constants.SOProperties.ContentTypeParent, true);          
-
-
+            string parentCtName = base.GetStringParameter(Constants.SOProperties.ContentTypeParent, true);          
             string siteURL = GetSiteURL();
 
             using (ClientContext context = InitializeContext(siteURL))
