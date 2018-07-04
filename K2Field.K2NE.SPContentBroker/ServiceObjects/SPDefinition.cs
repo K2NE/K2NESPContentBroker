@@ -535,6 +535,15 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
             return siteURL;
         }
 
+        private void GetDynamicListTitle(ref string listTitle)
+        {
+
+            if (base.IsListTitleParametrized)
+            {
+                listTitle = base.GetStringParameter(Constants.InternalProperties.ListTitle, true);
+            }
+        }
+
         private ContentType GetDocumentSetContentType(ContentTypeCollection contentColl)
         {
             foreach (ContentType ct in contentColl)

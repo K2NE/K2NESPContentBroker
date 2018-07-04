@@ -284,6 +284,7 @@ namespace K2Field.K2NE.SPContentBroker
         {
             Service.ServiceConfiguration.Add(Constants.ConfigurationProperties.SiteUrl, true, "https://sharepointsite/");
             Service.ServiceConfiguration.Add(Constants.ConfigurationProperties.IsDynamic, true, false);
+            Service.ServiceConfiguration.Add(Constants.ConfigurationProperties.IsListTitleParam, true, false);
             Service.ServiceConfiguration.Add(Constants.ConfigurationProperties.RequestTimeout, true, 180000);
             Service.ServiceConfiguration.Add(Constants.ConfigurationProperties.IncludeHiddenLists, true, false);
             Service.ServiceConfiguration.Add(Constants.ConfigurationProperties.IncludeHiddenFields, true, false);
