@@ -17,7 +17,6 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
     public partial class SPServiceObject : ServiceObjectBase
     {
         #region CreateDocSet
-
         private void AddCreateDocumentSetByNameMethod(ServiceObject so)
         {
             Method mCreateDocSet = Helper.CreateMethod(Constants.Methods.CreateDocumentSet, "Create a Document set by name", MethodType.Create);
@@ -25,6 +24,11 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
             if (base.IsDynamicSiteURL)
             {
                 Helper.AddSiteURLParameter(mCreateDocSet);
+            }
+
+            if (base.IsListTitleParametrized)
+            {
+                Helper.AddStringParameter(mCreateDocSet, Constants.InternalProperties.ListTitle);
             }
 
             foreach (Property prop in so.Properties)
@@ -58,6 +62,7 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
             DataTable results = base.ServiceBroker.ServicePackage.ResultTable;
 
             string listTitle = serviceObject.GetListTitle();
+            GetDynamicListTitle(ref listTitle);
             string DocSetName = base.GetStringProperty(Constants.SOProperties.DocSetName, true);
             string FolderName = string.Empty;
             if (serviceObject.IsSPFolderEnabled())
@@ -129,6 +134,7 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
             }
         }
         #endregion
+
         #region UpdateDocSet
         private void AddUpdateDocumentSetByNameMethod(ServiceObject so)
         {
@@ -137,6 +143,11 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
             if (base.IsDynamicSiteURL)
             {
                 Helper.AddSiteURLParameter(mUpdateDocSet);
+            }
+
+            if (base.IsListTitleParametrized)
+            {
+                Helper.AddStringParameter(mUpdateDocSet, Constants.InternalProperties.ListTitle);
             }
 
             foreach (Property prop in so.Properties)
@@ -170,6 +181,7 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
             DataTable results = base.ServiceBroker.ServicePackage.ResultTable;
             DataRow dataRow = results.NewRow();
             string listTitle = serviceObject.GetListTitle();
+            GetDynamicListTitle(ref listTitle);
             string siteURL = GetSiteURL();
             string DocSetName = base.GetStringProperty(Constants.SOProperties.DocSetName, true);
             string FolderName = string.Empty;
@@ -227,6 +239,7 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
             }
         }
         #endregion
+
         #region GetDocSet
         private void AddGetDocSetMethod(ServiceObject so)
         {
@@ -235,6 +248,11 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
             if (base.IsDynamicSiteURL)
             {
                 Helper.AddSiteURLParameter(mGetDocSet);
+            }
+
+            if (base.IsListTitleParametrized)
+            {
+                Helper.AddStringParameter(mGetDocSet, Constants.InternalProperties.ListTitle);
             }
 
             foreach (Property prop in so.Properties)
@@ -273,6 +291,7 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
 
             DataRow dataRow = results.NewRow();
             string listTitle = serviceObject.GetListTitle();
+            GetDynamicListTitle(ref listTitle);
             string DocSetName = base.GetStringProperty(Constants.SOProperties.DocSetName, true);
             string FolderName = string.Empty;
             if (serviceObject.IsSPFolderEnabled())
@@ -325,6 +344,7 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
                 }           
         }
         #endregion
+
         #region GetDocumentSets
         private void AddGetDocumentSetsMethod(ServiceObject so)
         {
@@ -333,6 +353,11 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
             if (base.IsDynamicSiteURL)
             {
                 Helper.AddSiteURLParameter(mGetDocumentSets);
+            }
+
+            if (base.IsListTitleParametrized)
+            {
+                Helper.AddStringParameter(mGetDocumentSets, Constants.InternalProperties.ListTitle);
             }
 
             foreach (Property prop in so.Properties)
@@ -368,6 +393,7 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
             DataTable results = base.ServiceBroker.ServicePackage.ResultTable;
 
             string listTitle = serviceObject.GetListTitle();
+            GetDynamicListTitle(ref listTitle);
             string siteURL = GetSiteURL();
             string DocSetName = base.GetStringProperty(Constants.SOProperties.DocSetName, false);
             string folderName = base.GetStringProperty(Constants.SOProperties.FolderName);
@@ -437,6 +463,11 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
                 Helper.AddSiteURLParameter(mRenameDocSet);
             }
 
+            if (base.IsListTitleParametrized)
+            {
+                Helper.AddStringParameter(mRenameDocSet, Constants.InternalProperties.ListTitle);
+            }
+
             foreach (Property prop in so.Properties)
             {
 
@@ -464,6 +495,7 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
             DataTable results = base.ServiceBroker.ServicePackage.ResultTable;
             DataRow dataRow = results.NewRow();
             string listTitle = serviceObject.GetListTitle();
+            GetDynamicListTitle(ref listTitle);
             string siteURL = GetSiteURL();
             string docSetName = base.GetStringProperty(Constants.SOProperties.DocSetName, true);
             string newDocSetName = base.GetStringProperty(Constants.SOProperties.DocSetNewName, true);
@@ -533,6 +565,11 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
                 Helper.AddSiteURLParameter(mDeleteDocSet);
             }
 
+            if (base.IsListTitleParametrized)
+            {
+                Helper.AddStringParameter(mDeleteDocSet, Constants.InternalProperties.ListTitle);
+            }
+
             foreach (Property prop in so.Properties)
             {
 
@@ -556,6 +593,7 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
             DataTable results = base.ServiceBroker.ServicePackage.ResultTable;
             DataRow dataRow = results.NewRow();
             string listTitle = serviceObject.GetListTitle();
+            GetDynamicListTitle(ref listTitle);
             string siteURL = GetSiteURL();
             string docSetName = base.GetStringProperty(Constants.SOProperties.DocSetName, true);
             string FolderName = string.Empty;

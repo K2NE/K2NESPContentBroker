@@ -115,6 +115,19 @@ namespace K2Field.K2NE.SPContentBroker
             }
         }
 
+        public bool IsListTitleParametrized
+        {
+            get
+            {
+                if (!this.ServiceBroker.Service.ServiceConfiguration.Contains(Constants.ConfigurationProperties.IsListTitleParam))
+                {
+                    throw new ApplicationException(string.Format(Constants.ErrorMessages.ConfigOptionNotFound, Constants.ConfigurationProperties.IsListTitleParam));
+                }
+
+                return bool.Parse(this.ServiceBroker.Service.ServiceConfiguration[Constants.ConfigurationProperties.IsListTitleParam].ToString());
+            }
+        }
+
         public bool Office365
         {
             get
