@@ -23,6 +23,12 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
             {
                 Helper.AddSiteURLParameter(mGetItemById);
             }
+
+            if (base.IsListTitleParametrized)
+            {
+                Helper.AddStringParameter(mGetItemById, Constants.InternalProperties.ListTitle);
+            }
+
             foreach (Property prop in so.Properties)
             {
                 if (string.Compare(prop.Name, Constants.SOProperties.ID, true) == 0)
@@ -57,6 +63,7 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
 
             int id = base.GetIntProperty(Constants.SOProperties.ID, true);
             string listTitle = serviceObject.GetListTitle();
+            GetDynamicListTitle(ref listTitle);
             string siteURL = GetSiteURL();
 
             using (ClientContext context = InitializeContext(siteURL))
@@ -105,6 +112,11 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
                 Helper.AddSiteURLParameter(mCreateItem);
             }
 
+            if (base.IsListTitleParametrized)
+            {
+                Helper.AddStringParameter(mCreateItem, Constants.InternalProperties.ListTitle);
+            }
+
             foreach (Property prop in so.Properties)
             {
                 if (string.Compare(prop.Name, Constants.SOProperties.ID, true) == 0 && !prop.IsInternal())
@@ -144,6 +156,7 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
             string folderPath = base.GetStringProperty(Constants.SOProperties.FolderName);
 
             string listTitle = serviceObject.GetListTitle();
+            GetDynamicListTitle(ref listTitle);
             string siteURL = GetSiteURL();
 
             DataRow dataRow = results.NewRow();
@@ -199,6 +212,12 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
                 Helper.AddSiteURLParameter(mUpdateItemById);
             }
 
+
+            if (base.IsListTitleParametrized)
+            {
+                Helper.AddStringParameter(mUpdateItemById, Constants.InternalProperties.ListTitle);
+            }
+
             foreach (Property prop in so.Properties)
             {
                 if (string.Compare(prop.Name, Constants.SOProperties.ID, true) == 0)
@@ -226,6 +245,7 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
             DataTable results = base.ServiceBroker.ServicePackage.ResultTable;
 
             string listTitle = serviceObject.GetListTitle();
+            GetDynamicListTitle(ref listTitle);
             string siteURL = GetSiteURL();
             int id = base.GetIntProperty(Constants.SOProperties.ID, true);
 
@@ -268,6 +288,11 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
                 Helper.AddSiteURLParameter(mDeleteItemById);
             }
 
+            if (base.IsListTitleParametrized)
+            {
+                Helper.AddStringParameter(mDeleteItemById, Constants.InternalProperties.ListTitle);
+            }
+
             foreach (Property prop in so.Properties)
             {
                 if (string.Compare(prop.Name, Constants.SOProperties.ID, true) == 0)
@@ -285,6 +310,7 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
             ServiceObject serviceObject = ServiceBroker.Service.ServiceObjects[0];
 
             string listTitle = serviceObject.GetListTitle();
+            GetDynamicListTitle(ref listTitle);
             string siteURL = GetSiteURL();
             int id = base.GetIntProperty(Constants.SOProperties.ID, true);
 
@@ -307,6 +333,12 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
             {
                 Helper.AddSiteURLParameter(mGetItemByTitle);
             }
+
+            if (base.IsListTitleParametrized)
+            {
+                Helper.AddStringParameter(mGetItemByTitle, Constants.InternalProperties.ListTitle);
+            }
+
             foreach (Property prop in so.Properties)
             {
                 if (string.Compare(prop.Name, Constants.SOProperties.Title, true) == 0)
@@ -338,6 +370,7 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
             DataTable results = base.ServiceBroker.ServicePackage.ResultTable;
 
             string listTitle = serviceObject.GetListTitle();
+            GetDynamicListTitle(ref listTitle);
             string siteURL = GetSiteURL();
             string folderName = base.GetStringProperty(Constants.SOProperties.FolderName);
             bool recursive = base.GetBoolProperty(Constants.SOProperties.Recursively);
@@ -420,6 +453,12 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
             {
                 Helper.AddSiteURLParameter(mGetItemByName);
             }
+
+            if (base.IsListTitleParametrized)
+            {
+                Helper.AddStringParameter(mGetItemByName, Constants.InternalProperties.ListTitle);
+            }
+
             foreach (Property prop in so.Properties)
             {
                 if (string.Compare(prop.Name, Constants.SOProperties.FileName, true) == 0)
@@ -450,6 +489,7 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
             DataTable results = base.ServiceBroker.ServicePackage.ResultTable;
 
             string listTitle = serviceObject.GetListTitle();
+            GetDynamicListTitle(ref listTitle);
             string siteURL = GetSiteURL();
             string folderName = base.GetStringProperty(Constants.SOProperties.FolderName);
             bool recursive = base.GetBoolProperty(Constants.SOProperties.Recursively);
@@ -513,6 +553,11 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
                 Helper.AddSiteURLParameter(mGetItems);
             }
 
+            if (base.IsListTitleParametrized)
+            {
+                Helper.AddStringParameter(mGetItems, Constants.InternalProperties.ListTitle);
+            }
+
             foreach (Property prop in so.Properties)
             {
                 if (!prop.IsInternal() &&
@@ -541,6 +586,7 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
             DataTable results = base.ServiceBroker.ServicePackage.ResultTable;
 
             string listTitle = serviceObject.GetListTitle();
+            GetDynamicListTitle(ref listTitle);
             string siteURL = GetSiteURL();
             string folderName = base.GetStringProperty(Constants.SOProperties.FolderName);
             bool recursive = base.GetBoolProperty(Constants.SOProperties.Recursively);
