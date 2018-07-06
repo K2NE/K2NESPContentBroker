@@ -25,6 +25,11 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
                 Helper.AddSiteURLParameter(mCreateFolder);
             }
 
+            if (base.IsListTitleParametrized)
+            {
+                Helper.AddStringParameter(mCreateFolder, Constants.InternalProperties.ListTitle);
+            }
+
             foreach (Property prop in so.Properties)
             {
 
@@ -49,6 +54,8 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
 
             string folderName = base.GetStringProperty(Constants.SOProperties.FolderName, true);
             string listName = serviceObject.GetListTitle();
+            GetDynamicListTitle(ref listName);
+
             string siteURL = GetSiteURL();
 
             DataRow dataRow = results.NewRow();
@@ -88,6 +95,11 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
                 Helper.AddSiteURLParameter(mDeleteFolder);
             }
 
+            if (base.IsListTitleParametrized)
+            {
+                Helper.AddStringParameter(mDeleteFolder, Constants.InternalProperties.ListTitle);
+            }
+
             foreach (Property prop in so.Properties)
             {
 
@@ -109,13 +121,16 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
             string folderName = base.GetStringProperty(Constants.SOProperties.FolderName, true);
             bool recursive = base.GetBoolProperty(Constants.SOProperties.Recursively);
             ServiceObject serviceObject = ServiceBroker.Service.ServiceObjects[0];
+            string listTitle = serviceObject.GetListTitle();
+            GetDynamicListTitle(ref listTitle);
+
             string siteURL = GetSiteURL();
             
             using (ClientContext context = InitializeContext(siteURL))
             {
                 Web spWeb = context.Web;
 
-                List list = spWeb.Lists.GetByTitle(serviceObject.MetaData.GetServiceElement<string>(Constants.InternalProperties.ListTitle));
+                List list = spWeb.Lists.GetByTitle(listTitle);
                 context.Load(list.RootFolder);
                 context.ExecuteQuery();
 
@@ -143,6 +158,11 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
                 Helper.AddSiteURLParameter(mRenameFolder);
             }
 
+            if (base.IsListTitleParametrized)
+            {
+                Helper.AddStringParameter(mRenameFolder, Constants.InternalProperties.ListTitle);
+            }
+
             foreach (Property prop in so.Properties)
             {
 
@@ -166,6 +186,8 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
             DataTable results = base.ServiceBroker.ServicePackage.ResultTable;
 
             string listTitle = serviceObject.GetListTitle();
+            GetDynamicListTitle(ref listTitle);
+
             string siteURL = GetSiteURL();
             string folderName = base.GetStringProperty(Constants.SOProperties.FolderName, true);
             string destinationFolderName = base.GetStringProperty(Constants.SOProperties.DestinationFolder, true);
@@ -210,6 +232,11 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
                 Helper.AddSiteURLParameter(mMoveFolder);
             }
 
+            if (base.IsListTitleParametrized)
+            {
+                Helper.AddStringParameter(mMoveFolder, Constants.InternalProperties.ListTitle);
+            }
+
             foreach (Property prop in so.Properties)
             {
 
@@ -242,6 +269,8 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
             string folderName = base.GetStringProperty(Constants.SOProperties.FolderName, true);
                         
             string listTitle = serviceObject.GetListTitle();
+            GetDynamicListTitle(ref listTitle);
+
             string siteURL = GetSiteURL();
 
             using (ClientContext sourceContext = InitializeContext(siteURL))

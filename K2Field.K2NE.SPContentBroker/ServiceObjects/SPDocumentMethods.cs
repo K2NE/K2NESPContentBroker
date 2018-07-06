@@ -25,6 +25,11 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
                 Helper.AddSiteURLParameter(mCreateDocument);
             }
 
+            if (base.IsListTitleParametrized)
+            {
+                Helper.AddStringParameter(mCreateDocument, Constants.InternalProperties.ListTitle);
+            }
+
             foreach (Property prop in so.Properties)
             {
                 if (string.Compare(prop.Name, Constants.SOProperties.ID, true) == 0 && !prop.IsInternal())
@@ -65,6 +70,8 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
             bool overwriteExistingDocument = base.GetBoolProperty(Constants.SOProperties.OverwriteExistingDocument);
 
             string listTitle = serviceObject.GetListTitle();
+            GetDynamicListTitle(ref listTitle);
+
             string siteURL = GetSiteURL();
 
             DataRow dataRow = results.NewRow();
@@ -123,6 +130,11 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
                 Helper.AddSiteURLParameter(mDeleteDocument);
             }
 
+            if (base.IsListTitleParametrized)
+            {
+                Helper.AddStringParameter(mDeleteDocument, Constants.InternalProperties.ListTitle);
+            }
+
             foreach (Property prop in so.Properties)
             {
                 if (string.Compare(prop.Name, Constants.SOProperties.ID, true) == 0)
@@ -140,6 +152,8 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
             ServiceObject serviceObject = ServiceBroker.Service.ServiceObjects[0];
 
             string listTitle = serviceObject.GetListTitle();
+            GetDynamicListTitle(ref listTitle);
+
             string siteURL = GetSiteURL();
             int id = base.GetIntProperty(Constants.SOProperties.ID, true);
 
@@ -162,6 +176,12 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
             {
                 Helper.AddSiteURLParameter(mGetDocumentById);
             }
+
+            if (base.IsListTitleParametrized)
+            {
+                Helper.AddStringParameter(mGetDocumentById, Constants.InternalProperties.ListTitle);
+            }
+
             foreach (Property prop in so.Properties)
             {
                 if (string.Compare(prop.Name, Constants.SOProperties.ID, true) == 0)
@@ -192,6 +212,8 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
 
             int id = base.GetIntProperty(Constants.SOProperties.ID, true);
             string listTitle = serviceObject.GetListTitle();
+            GetDynamicListTitle(ref listTitle);
+
             string siteURL = GetSiteURL();
 
             using (ClientContext context = InitializeContext(siteURL))
@@ -245,6 +267,11 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
                 Helper.AddSiteURLParameter(mGetDocuments);
             }
 
+            if (base.IsListTitleParametrized)
+            {
+                Helper.AddStringParameter(mGetDocuments, Constants.InternalProperties.ListTitle);
+            }
+
             foreach (Property prop in so.Properties)
             {
                 if (!prop.IsInternal() &&
@@ -273,6 +300,7 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
             DataTable results = base.ServiceBroker.ServicePackage.ResultTable;
 
             string listTitle = serviceObject.GetListTitle();
+            GetDynamicListTitle(ref listTitle);
             string siteURL = GetSiteURL();
             string folderName = base.GetStringProperty(Constants.SOProperties.FolderName);
             bool recursive = base.GetBoolProperty(Constants.SOProperties.Recursively);
@@ -351,6 +379,12 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
             {
                 Helper.AddSiteURLParameter(mRenameDocument);
             }
+
+            if (base.IsListTitleParametrized)
+            {
+                Helper.AddStringParameter(mRenameDocument, Constants.InternalProperties.ListTitle);
+            }
+
             foreach (Property prop in so.Properties)
             {
                 if (string.Compare(prop.Name, Constants.SOProperties.ID, true) == 0)
@@ -382,6 +416,8 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
             string newFileName = base.GetStringProperty(Constants.SOProperties.NewFileName);
 
             string listTitle = serviceObject.GetListTitle();
+            GetDynamicListTitle(ref listTitle);
+
             string siteURL = GetSiteURL();
 
             using (ClientContext context = InitializeContext(siteURL))
@@ -425,6 +461,11 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
             if (base.IsDynamicSiteURL)
             {
                 Helper.AddSiteURLParameter(mCopyDocumentByName);
+            }
+
+            if (base.IsListTitleParametrized)
+            {
+                Helper.AddStringParameter(mCopyDocumentByName, Constants.InternalProperties.ListTitle);
             }
 
             foreach (Property prop in so.Properties)
@@ -471,6 +512,8 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
             string folderPath = string.Empty;
 
             string listTitle = serviceObject.GetListTitle();
+            GetDynamicListTitle(ref listTitle);
+
             string siteURL = GetSiteURL();
 
             //add FileLeafRef property for filter by File Name
@@ -540,6 +583,11 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
                 Helper.AddSiteURLParameter(mMoveDocumentByName);
             }
 
+            if (base.IsListTitleParametrized)
+            {
+                Helper.AddStringParameter(mMoveDocumentByName, Constants.InternalProperties.ListTitle);
+            }
+
             foreach (Property prop in so.Properties)
             {
                 if (prop.IsDestinationURL() || prop.IsDestinationLibrary() || prop.IsDestinationFolder())
@@ -584,6 +632,8 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
             string folderPath = string.Empty;
 
             string listTitle = serviceObject.GetListTitle();
+            GetDynamicListTitle(ref listTitle);
+
             string siteURL = GetSiteURL();
 
             //add FileLeafRef property for filter by File Name
@@ -795,6 +845,11 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
                 Helper.AddSiteURLParameter(mCheckInDocumentByName);
             }
 
+            if (base.IsListTitleParametrized)
+            {
+                Helper.AddStringParameter(mCheckInDocumentByName, Constants.InternalProperties.ListTitle);
+            }
+
             foreach (Property prop in so.Properties)
             {
 
@@ -847,6 +902,8 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
             bool useCheckedInVersion = base.GetBoolProperty(Constants.SOProperties.UseCheckedInVersion);
 
             string listTitle = serviceObject.GetListTitle();
+            GetDynamicListTitle(ref listTitle);
+
             string siteURL = GetSiteURL();
 
             //add FileLeafRef property for filter by File Name
@@ -899,6 +956,11 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
                 Helper.AddSiteURLParameter(mCheckInDocumentById);
             }
 
+            if (base.IsListTitleParametrized)
+            {
+                Helper.AddStringParameter(mCheckInDocumentById, Constants.InternalProperties.ListTitle);
+            }
+
             foreach (Property prop in so.Properties)
             {
                 if (string.Compare(prop.Name, Constants.SOProperties.ID, true) == 0)
@@ -947,6 +1009,8 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
             bool useCheckedInVersion = base.GetBoolProperty(Constants.SOProperties.UseCheckedInVersion);
 
             string listTitle = serviceObject.GetListTitle();
+            GetDynamicListTitle(ref listTitle);
+
             string siteURL = GetSiteURL();
 
             using (ClientContext context = InitializeContext(siteURL))
@@ -1001,6 +1065,11 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
                 Helper.AddSiteURLParameter(mCheckOutDocumentByName);
             }
 
+            if (base.IsListTitleParametrized)
+            {
+                Helper.AddStringParameter(mCheckOutDocumentByName, Constants.InternalProperties.ListTitle);
+            }
+
             foreach (Property prop in so.Properties)
             {
 
@@ -1044,6 +1113,8 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
             bool useCheckedOutVersion = base.GetBoolProperty(Constants.SOProperties.UseCheckedOutVersion);
 
             string listTitle = serviceObject.GetListTitle();
+            GetDynamicListTitle(ref listTitle);
+
             string siteURL = GetSiteURL();
 
             //add FileLeafRef property for filter by File Name
@@ -1094,6 +1165,11 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
                 Helper.AddSiteURLParameter(mCheckOutDocumentById);
             }
 
+            if (base.IsListTitleParametrized)
+            {
+                Helper.AddStringParameter(mCheckOutDocumentById, Constants.InternalProperties.ListTitle);
+            }
+
             foreach (Property prop in so.Properties)
             {
                 if (string.Compare(prop.Name, Constants.SOProperties.ID, true) == 0)
@@ -1133,6 +1209,8 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
             bool useCheckedOutVersion = base.GetBoolProperty(Constants.SOProperties.UseCheckedInVersion);
 
             string listTitle = serviceObject.GetListTitle();
+            GetDynamicListTitle(ref listTitle);
+
             string siteURL = GetSiteURL();
 
             using (ClientContext context = InitializeContext(siteURL))
