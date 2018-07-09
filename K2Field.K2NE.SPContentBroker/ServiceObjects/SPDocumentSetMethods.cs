@@ -70,6 +70,9 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
                 FolderName = base.GetStringProperty(Constants.SOProperties.FolderName, false);
             }
 
+            string ContentType = base.GetStringProperty(Constants.SOProperties.ContentType, false);
+
+
             DataRow dataRow = results.NewRow();
             using (ClientContext context = InitializeContext(GetSiteURL()))
             {
@@ -93,19 +96,44 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
                 }
 
                 Microsoft.SharePoint.Client.ClientResult<string> FileLink = new ClientResult<string>();
-                foreach (ContentType ct in list.ContentTypes)
+
+                ContentType targetCT = null;
+
+                if (!String.IsNullOrWhiteSpace(ContentType))
                 {
-                    if (ct.Id.StringValue.StartsWith(Constants.SharePointProperties.DocSetContentType))
+                    if (ContentType.Trim().StartsWith(Constants.SharePointProperties.DocSetContentType))
                     {
-                        FileLink = DocumentSet.Create(context, parentFolder, DocSetName, ct.Id);
-                        break;
+                        targetCT = list.ContentTypes.OrderBy(ct => ct.Id.StringValue.Length).Where(c => c.Id.StringValue.StartsWith(ContentType.Trim())).FirstOrDefault();
+                    }
+                    else
+                    {
+                        targetCT = list.ContentTypes.Where(c => c.Name.ToLower() == ContentType.ToLower().Trim()).FirstOrDefault();
                     }
                 }
+
+                if (targetCT != null)
+                {
+                    FileLink = DocumentSet.Create(context, parentFolder, DocSetName, targetCT.Id);
+                }
+                else
+                {
+                    foreach (ContentType ct in list.ContentTypes)
+                    {
+                        if (ct.Id.StringValue.StartsWith(Constants.SharePointProperties.DocSetContentType))
+                        {
+                            FileLink = DocumentSet.Create(context, parentFolder, DocSetName, ct.Id);
+                            break;
+                        }
+
+                    }
+
+                }
+
                 context.ExecuteQuery();
 
                 Folder documentSet = null;
                 documentSet = context.Web.GetFolderByServerRelativeUrl(FileLink.Value);
-                context.Load(documentSet,c=>c.ListItemAllFields);
+                context.Load(documentSet, c => c.ListItemAllFields);
                 context.ExecuteQuery();
 
                 ListItem listItem = documentSet.ListItemAllFields;
@@ -117,7 +145,7 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
 
                 foreach (Property prop in serviceObject.Properties)
                 {
-                    if (prop.Value != null && !prop.IsDocSetName() && !prop.IsFolderName())
+                    if (prop.Value != null && !prop.IsDocSetName() && !prop.IsFolderName() && !prop.IsDocSetContentType())
                     {
                         Helpers.SPHelper.AssignFieldValue(listItem, prop);
                     }
@@ -189,7 +217,7 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
             {
                 FolderName = base.GetStringProperty(Constants.SOProperties.FolderName, false);
             }
-           
+
             using (ClientContext context = InitializeContext(siteURL))
             {
                 Web spWeb = context.Web;
@@ -201,15 +229,15 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
                 if (list != null && list.ItemCount > 0)
                 {
                     Folder documentSet = null;
-                    if(string.IsNullOrEmpty(FolderName))
+                    if (string.IsNullOrEmpty(FolderName))
                     {
-                        documentSet = context.Web.GetFolderByServerRelativeUrl(string.Concat(list.RootFolder.Name,'/', DocSetName));
+                        documentSet = context.Web.GetFolderByServerRelativeUrl(string.Concat(list.RootFolder.Name, '/', DocSetName));
                     }
                     else
                     {
                         documentSet = context.Web.GetFolderByServerRelativeUrl(string.Concat(list.RootFolder.Name, '/', FolderName, '/', DocSetName));
                     }
-                   
+
                     context.Load(documentSet, c => c.ListItemAllFields);
                     context.ExecuteQuery();
 
@@ -222,7 +250,7 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
 
                     foreach (Property prop in serviceObject.Properties)
                     {
-                        if (prop.Value != null && !prop.IsDocSetName() && !prop.IsFolderName())
+                        if (prop.Value != null && !prop.IsDocSetName() && !prop.IsFolderName() && !prop.IsDocSetContentType())
                         {
                             Helpers.SPHelper.AssignFieldValue(listItem, prop);
                         }
@@ -326,22 +354,22 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
 
                 ListItem listItem = documentSet.ListItemAllFields;
 
-              
-                    foreach (Property prop in serviceObject.Properties)
-                    {
-                        if (listItem.FieldValues.ContainsKey(prop.Name) && !prop.IsFile())
-                        {
-                            Helpers.SPHelper.AddFieldValue(dataRow, prop, listItem);
-                        }
 
-                        if (prop.IsLinkToItem())
-                        {
-                            string strurl = BuildListItemLink(context.Url, list.DefaultDisplayFormUrl, listItem.Id);
-                            dataRow[prop.Name] = strurl;
-                        }
+                foreach (Property prop in serviceObject.Properties)
+                {
+                    if (listItem.FieldValues.ContainsKey(prop.Name) && !prop.IsFile())
+                    {
+                        Helpers.SPHelper.AddFieldValue(dataRow, prop, listItem);
                     }
-                    results.Rows.Add(dataRow);
-                }           
+
+                    if (prop.IsLinkToItem())
+                    {
+                        string strurl = BuildListItemLink(context.Url, list.DefaultDisplayFormUrl, listItem.Id);
+                        dataRow[prop.Name] = strurl;
+                    }
+                }
+                results.Rows.Add(dataRow);
+            }
         }
         #endregion
 
@@ -504,7 +532,7 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
             {
                 FolderName = base.GetStringProperty(Constants.SOProperties.FolderName, false);
             }
-            
+
 
             using (ClientContext context = InitializeContext(siteURL))
             {
@@ -601,7 +629,7 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
             {
                 FolderName = base.GetStringProperty(Constants.SOProperties.FolderName, false);
             }
-           
+
             using (ClientContext context = InitializeContext(siteURL))
             {
                 Web spWeb = context.Web;

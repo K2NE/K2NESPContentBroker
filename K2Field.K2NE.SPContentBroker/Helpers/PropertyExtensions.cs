@@ -59,6 +59,14 @@ namespace K2Field.K2NE.SPContentBroker.Helpers
         }
 
         /// <summary>
+        /// SMO property is an additional property of SharePoint file (FileName of File Link property)
+        /// </summary>
+        public static bool IsDocSetContentType(this Property property)
+        {
+            return (string.Compare(property.Name, Constants.SOProperties.ContentType) == 0);
+        }
+
+        /// <summary>
         /// Helps to determine if the property is the specific File property in SharePoint.
         /// </summary>
         /// <param name="property"></param>

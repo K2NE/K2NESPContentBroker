@@ -49,6 +49,7 @@ namespace K2Field.K2NE.SPContentBroker.Constants
         public const string DocSetName_DisplayName = "DocumentSetName";
         public const string DocSetNewName = "K2_DocSetNewName";
         public const string DocSetNewName_DisplayName = "NewDocumentSetName";
+        public const string ContentType = "ContentType";
         //permission properties
         public const string UserLogins = "K2_UserLogins";
         public const string UserLogins_DisplayName = "UserLogins";
