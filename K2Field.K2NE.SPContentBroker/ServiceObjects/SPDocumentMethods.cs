@@ -30,6 +30,8 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
                 Helper.AddStringParameter(mCreateDocument, Constants.InternalProperties.ListTitle);
             }
 
+            Helper.AddStringParameter(mCreateDocument, Constants.InternalProperties.ContentTypeId, isRequired: false);
+
             foreach (Property prop in so.Properties)
             {
                 if (string.Compare(prop.Name, Constants.SOProperties.ID, true) == 0 && !prop.IsInternal())
@@ -47,6 +49,11 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
                 }
                 if ((so.IsSPFolderEnabled() == true &&
                     prop.IsFolderName()) || prop.IsOverwriteExistingDocument())
+                {
+                    mCreateDocument.InputProperties.Add(prop);
+                }
+
+                if (prop.IsContentTypeId())
                 {
                     mCreateDocument.InputProperties.Add(prop);
                 }
@@ -106,6 +113,8 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
                         Helpers.SPHelper.AssignFieldValue(newItem, prop);
                     }
                 }
+
+                newItem[Constants.InternalProperties.ContentTypeId] = base.GetStringParameter(Constants.InternalProperties.ContentTypeId);
 
                 newItem.Update();
                 context.ExecuteQuery();

@@ -162,13 +162,13 @@ namespace K2Field.K2NE.SPContentBroker.Helpers
             method.MethodParameters.Create(methodParameter);
         }
 
-        public static void AddStringParameter(Method method, string name)
+        public static void AddStringParameter(Method method, string name, bool isRequired = true)
         {
             MethodParameter methodParameter = new MethodParameter(name);
             methodParameter.MetaData.DisplayName = AddSpaceBeforeCaptialLetter(name);
             methodParameter.Type = "System.String";
             methodParameter.SoType = SoType.Text;
-            methodParameter.IsRequired = true;
+            methodParameter.IsRequired = isRequired;
             method.MethodParameters.Create(methodParameter);
         }
 

@@ -28,7 +28,7 @@ namespace K2Field.K2NE.SPContentBroker.Constants
         public const string ListBaseType = "ListBaseType";
         public const string IsFileChild = "IsFileChild";
         public const string IsListDocumentSet = "IsListDocumentSet";
-    
+        public const string ContentTypeId = "ContentTypeId";
     }
 
     public static class SharePointProperties

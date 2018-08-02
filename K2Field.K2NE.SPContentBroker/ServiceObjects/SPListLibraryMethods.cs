@@ -117,6 +117,8 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
                 Helper.AddStringParameter(mCreateItem, Constants.InternalProperties.ListTitle);
             }
 
+            Helper.AddStringParameter(mCreateItem, Constants.InternalProperties.ContentTypeId, isRequired: false);
+
             foreach (Property prop in so.Properties)
             {
                 if (string.Compare(prop.Name, Constants.SOProperties.ID, true) == 0 && !prop.IsInternal())
@@ -141,6 +143,11 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
                 if (prop.IsLinkToItem())
                 {
                     mCreateItem.ReturnProperties.Add(prop);
+                }
+
+                if (prop.IsContentTypeId())
+                {
+                    mCreateItem.InputProperties.Add(prop);
                 }
             }
 
@@ -189,6 +196,8 @@ namespace K2Field.K2NE.SPContentBroker.ServiceObjects
                         Helpers.SPHelper.AssignFieldValue(newItem, prop);
                     }
                 }
+
+                newItem[Constants.InternalProperties.ContentTypeId] = base.GetStringParameter(Constants.InternalProperties.ContentTypeId);
 
                 newItem.Update();
                 context.ExecuteQuery();
