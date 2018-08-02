@@ -226,5 +226,13 @@ namespace K2Field.K2NE.SPContentBroker.Helpers
         {
             return string.Compare(property.Name, Constants.SOProperties.DocSetNewName) == 0;
         }
+
+        /// <summary>
+        /// SMO property is for ContentTypeId.
+        /// </summary>
+        public static bool IsContentTypeId(this Property property)
+        {
+            return string.Compare(property.Name, Constants.SOProperties.ContentTypeID) == 0;
+        }
     }
 }

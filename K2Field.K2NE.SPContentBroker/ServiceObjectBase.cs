@@ -31,10 +31,6 @@ namespace K2Field.K2NE.SPContentBroker
             private set;
         }
 
-
-
-
-
         public string SiteURL
         {
             get
@@ -477,9 +473,6 @@ namespace K2Field.K2NE.SPContentBroker
         public abstract void Execute();
 
         #endregion Abstract methods
-
-
-
 
     }
 }

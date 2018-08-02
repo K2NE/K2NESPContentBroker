@@ -292,6 +292,7 @@ namespace K2Field.K2NE.SPContentBroker
             Service.ServiceConfiguration.Add(Constants.ConfigurationProperties.Office365, true, false);
             return base.GetConfigSection();
         }
+
         public void Init(IServiceMarshalling serviceMarshalling, IServerMarshaling serverMarshaling)
         {
             lock (syncobject)
@@ -315,13 +316,15 @@ namespace K2Field.K2NE.SPContentBroker
 
 
         }
+
         public override void Extend() { }
+
         public void Unload()
         {
             HostServiceLogger.Dispose();
         }
-        #endregion Public overrides for ServiceAssemblyBase
 
+        #endregion Public overrides for ServiceAssemblyBase
 
     }
 }
